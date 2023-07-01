@@ -6,6 +6,6 @@ const {
   INSERT_QUESTION,
 } = require("../controllers/question");
 
-router.post("/question", INSERT_QUESTION);
+router.post("/question", authMiddleware, INSERT_QUESTION);
 
 module.exports = router;
