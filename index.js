@@ -1,9 +1,12 @@
 const express = require("express");
 const app = express();
-var cors = require("cors");
+
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const userRouter = require("./routes/user");
-// const ticketRouter = require("./routes/ticket");
+const questionRouter = require("./routes/question");
+const commentRouter = require("./routes/comment");
+
 require('dotenv').config();
 const mongoose = require("mongoose");
 
@@ -13,7 +16,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(userRouter);
-// app.use(ticketRouter);
+app.use(questionRouter);
+app.use(commentRouter);
 
 mongoose
   .connect(process.env.MONGO_CONNECT)
