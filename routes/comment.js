@@ -6,7 +6,6 @@ const {
   INSERT_COMMENT,
 } = require("../controllers/comment");
 
-router.post("/comment", authMiddleware, INSERT_COMMENT);
-
+router.post("/question/:questionId/comment", authMiddleware, INSERT_COMMENT);
 
 module.exports = router;

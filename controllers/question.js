@@ -1,7 +1,6 @@
 const QuestionModel = require("../models/question");
-const uniqid = require("uniqid");
 const UserModel = require("../models/user");
-
+const uniqid = require("uniqid");
 
 
 module.exports.INSERT_QUESTION = async (req, res) => {
