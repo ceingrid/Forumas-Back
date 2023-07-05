@@ -6,7 +6,7 @@ const uniqid = require("uniqid");
 module.exports.INSERT_QUESTION = async (req, res) => {
     try {
         const user = await UserModel.findOne({ id: req.body.id });
-        const asked_question = await QuestionModel.findOne({ id: req.body.asked_question_id });
+        const asked_question = await QuestionModel.findOne({ id: req.body.id });
 
         if (!user) {
             return res.status(404).json({err: "User is not logged in"})
@@ -14,7 +14,7 @@ module.exports.INSERT_QUESTION = async (req, res) => {
         
         const question = new QuestionModel({
             question_text: req.body.question_text,
-            asked_question_id: uniqid(),
+            id: uniqid(),
           });
         
           const savedQuestion = await question.save();
@@ -34,7 +34,7 @@ module.exports.INSERT_QUESTION = async (req, res) => {
 
 module.exports.DELETE_QUESTION = async (req, res) => {
     try {
-      await QuestionModel.deleteOne({ id: req.params.asked_question_id}).exec();
+      await QuestionModel.deleteOne({ id: req.params.id}).exec();
   
       return res.status(200).json({ statusMessage: "Deleted successfully" });
     } catch (err) {

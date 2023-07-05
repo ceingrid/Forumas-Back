@@ -4,32 +4,63 @@ const UserModel = require("../models/user")
 const uniqid = require("uniqid");
 
 module.exports.INSERT_COMMENT = async (req, res) => {
+    console.log(req.params);
     try {
-      const theQuestion = await QuestionModel.findOne({ asked_question_id: req.params.asked_question_id });
-  
-      if (!theQuestion) {
-        return res.status(404).json({err: "Question is not available"})
-      }
-  
-      const comment = new CommentModel({
-        comment_text: req.body.comment_text,
-        answer_id: uniqid(),
-      });
-  
-      const newComment = await comment.save();
-  
-      await QuestionModel.updateOne(
-        { _id: asked_question_id },
-        { $push: {answers_id: newComment} }
-      );
-  
-      return res.status(200).json({ response: newComment });
+        const theQuestion = await QuestionModel.findOne({ id: req.params.id});
+
+        if (!theQuestion) {
+            return res.status(404).json({err: "Question is not available"})
+        }
+
+        const comment = new CommentModel({
+            comment_text: req.body.comment_text,
+            answer_id: uniqid(),
+        });
+
+        const newComment = await comment.save();
+
+        await QuestionModel.updateOne(
+            { id: req.params.id },
+            { $push: {answers_id: newComment} }
+        );
+
+        return res.status(200).json({ response: newComment });
     } catch (err) {
-      console.log("err", err);
-      return res.status(500).json({ response: "ERROR" });
+        console.log("err", err);
+        return res.status(500).json({ response: "ERROR" });
     }
-  };
+};
+
+
+ // antrinis variantas
+// module.exports.INSERT_COMMENT = async (req, res) => {
+//     try {
+//       const theQuestion = await QuestionModel.findOne({ asked_question_id: req.params.asked_question_id });
   
+//       if (!theQuestion) {
+//         return res.status(404).json({err: "Question is not available"})
+//       }
+  
+//       const comment = new CommentModel({
+//         comment_text: req.body.comment_text,
+//         answer_id: uniqid(),
+//       });
+  
+//       const newComment = await comment.save();
+  
+//       await QuestionModel.updateOne(
+//         { _id: asked_question_id },
+//         { $push: {answers_id: newComment} }
+//       );
+  
+//       return res.status(200).json({ response: newComment });
+//     } catch (err) {
+//       console.log("err", err);
+//       return res.status(500).json({ response: "ERROR" });
+//     }
+//   };
+  
+// pirminis variantas
 
 // module.exports.INSERT_COMMENT = async (req, res) => {
 //     try {
