@@ -41,3 +41,13 @@ module.exports.DELETE_COMMENT = async (req, res) => {
       res.status(500).json({ response: "Failed" });
     }
   };
+
+  module.exports.GET_ALL_COMMENTS = async (req, res) => {
+    try {
+      const comments = await CommentModel.find({}, 'comment_text -_id');
+      res.status(200).json({ comments: comments });
+    } catch (err) {
+      console.log("ERR", err);
+      res.status(500).json({ response: "ERROR, please try later" });
+    }
+  };

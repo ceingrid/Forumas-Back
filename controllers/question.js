@@ -42,3 +42,13 @@ module.exports.DELETE_QUESTION = async (req, res) => {
       res.status(500).json({ response: "Failed" });
     }
   };
+
+  module.exports.GET_ALL_QUESTIONS = async (req, res) => {
+    try {
+      const questions = await QuestionModel.find({}, 'question_text -_id');
+      res.status(200).json({ questions: questions });
+    } catch (err) {
+      console.log("ERR", err);
+      res.status(500).json({ response: "ERROR, please try later" });
+    }
+  };
